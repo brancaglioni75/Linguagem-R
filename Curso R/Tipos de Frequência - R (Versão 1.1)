@@ -1,0 +1,50 @@
+#Instalar pacotes do R
+install.packages("Hmisc")
+require(Hmisc)
+install.packages("dplyr")
+require(dplyr)
+
+#Primeira forma de criar o vetor
+idade=c(10,10,10,10,30,30,30,30,30,30,30,
+        50,50,50,50,70,70,70,90)
+
+#Segunda forma de criar o vetor
+idade=c(rep(10,4), rep(30,8), rep(50,4), rep(70,3), 90)
+
+#Achando as frequências simples
+frequencia_simples = table(idade)
+
+#Visual excel
+dados_simples= data.frame(frequencia_simples)
+
+#frequencia acumulada
+frequencia_acumulada=cumsum(frequencia_simples)
+
+#frequencia relativa simples
+frequencia_relativa_simples=frequencia_simples/sum(frequencia_simples)
+
+#Adicionando coluna com acumulada
+dados_simples$frequencia_acumulada=frequencia_acumulada
+
+#Frequencia relativa simples
+frequencia_relativa_simples=frequencia_simples/sum(frequencia_simples)
+
+#Frequencia relativa acumulada
+frequencia_relativa_acumulada=frequencia_acumulada/sum(frequencia_acumulada)
+
+dados_simples$frequencia_relativa_acumulada=frequencia_relativa_acumulada
+
+
+#Achando automaticamente a frequencia simples e relativa simples
+describe(idade)
+
+
+  
+head(dados_simples)
+
+#Usando tidy
+
+dados_simples_tidy = dados_simples %>%
+                      mutate(frequencia_acumulada = cumsum(Freq),
+                      frequencia_relativa_simples = Freq/sum(Freq),
+                      frequencia_relativa_acumulada = cumsum(frequencia_relativa_simples))
